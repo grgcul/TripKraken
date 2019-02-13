@@ -1,0 +1,12 @@
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\bin\Debug\TripKraken.DataSource.dll.config
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\bin\Debug\TripKraken.DataSource.dll
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\bin\Debug\TripKraken.DataSource.pdb
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\bin\Debug\EntityFramework.dll
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\bin\Debug\EntityFramework.xml
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\obj\Debug\TripKraken.DataSource.csprojAssemblyReference.cache
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\obj\Debug\TripKraken.DataSource.csproj.CoreCompileInputs.cache
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\obj\Debug\TripKraken.DataSource.csproj.CopyComplete
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\obj\Debug\TripKraken.DataSource.dll
+C:\Users\grgcu\Documents\Gitprojects\TravelWise\TravelWiseCrawler\TravelWiseCrawler\TripKraken.DataSource\obj\Debug\TripKraken.DataSource.pdb

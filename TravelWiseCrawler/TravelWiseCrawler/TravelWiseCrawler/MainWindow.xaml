@@ -1,0 +1,25 @@
+﻿<Window x:Class="TravelWiseCrawler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelWiseCrawler"
+        mc:Ignorable="d"
+        Title="TripKraken Crawler" Height="450" Width="800" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+    <Grid Background="AliceBlue" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" RenderTransformOrigin="-0.47,-0.07">
+        <Canvas Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <Button Name="crawlAllBtn" Padding="3,3,3,3" BorderThickness="0" FontStyle="Normal" Content="Crawl everything" HorizontalAlignment="Stretch" VerticalAlignment="Top" Canvas.Left="21" Canvas.Top="10" Width="102" Click="CrawlAllBtn_Click"/>
+            <Button Padding="3,3,3,3" BorderThickness="0" Content="Crawl prices" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="80" Grid.RowSpan="2" Canvas.Left="128" Canvas.Top="10"/>
+            <Button Padding="3,3,3,3" BorderThickness="0" Content="Crawl crime rate" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.RowSpan="2" Canvas.Left="213" Canvas.Top="10" Width="100"/>
+            <Button Name="jsonCitiesToObject" Padding="3,3,3,3" BorderThickness="0" Content="Json Cities To Object" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.RowSpan="2" Canvas.Left="317" Canvas.Top="10" Width="125" Click="JsonCitiesToObject_Click"/>
+        </Canvas>
+
+        <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Top" Margin="24,65,0,0" >
+            <ListBox HorizontalContentAlignment="Stretch"  Name="lbCrawlInfo" MinHeight="200"  VerticalContentAlignment="Stretch" Grid.Column="4" Grid.Row="4" Margin="0,20,20,20"/>
+        </Grid>
+ 
+    </Grid>
+
+
+
+</Window>
