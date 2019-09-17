@@ -1,0 +1,64 @@
+﻿@using System.Web.Configuration
+
+@{
+    string controllerName = (string)Request.RequestContext.RouteData.Values["controller"];
+    string actionName = (string)Request.RequestContext.RouteData.Values["action"];
+}
+
+<!-- [ navigation menu ] start -->
+<nav class="pcoded-navbar">
+    <div class="navbar-wrapper">
+        <div class="navbar-brand header-logo">
+            <a href="@Url.Action("Index","Home")" class="b-brand">
+                <div class="b-bg">
+                    <i class="feather icon-trending-up"></i>
+                </div>
+                <span class="b-title">Trip Kraken</span>
+            </a>
+            <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+        </div>
+        @if (Request.IsAuthenticated)
+        {
+            <div class="navbar-content scroll-div">
+                <ul class="nav pcoded-inner-navbar">
+                    <li class="nav-item pcoded-menu-caption">
+
+                    </li>
+                    <li data-username="" class="nav-item active pcoded-trigger">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="fas fa-globe"></i></span><span class="pcoded-mtext">Country Data</span></a>
+                        <ul class="pcoded-submenu">
+                            <li class="active"><a href="@Url.Action("Index","Home")" class="">Dashboard</a></li>
+                            <li class=""><a href="@Url.Action("CostOfLife","Home")" class="">Cost of life</a></li>
+                            <li class=""><a href="dashboard-crm.html" class="">Crime rate</a></li>
+                            <li class=""><a href="dashboard-analytics.html" class="">Health care</a></li>
+                            <li class=""><a href="dashboard-crypto.html" class="">Other info</a></li>
+                        </ul>
+                    </li>
+
+                    <li data-username="" class="nav-item active pcoded-trigger">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="fas fa-user-edit"></i></span><span class="pcoded-mtext">My data</span></a>
+                        <ul class="pcoded-submenu">
+                            <li><a href="index.html" class="">My review</a></li>
+                            <li class=""><a href="dashboard-ecommerce.html" class="">Visited country</a></li>
+                            <li class=""><a href="dashboard-crm.html" class="">My input</a></li>
+                        </ul>
+                    </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li data-username="" class="nav-item active pcoded-trigger">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Admin</span></a>
+                        <ul class="pcoded-submenu">
+                            <li><a href="index.html" class="">Users</a></li>
+                            <li class=""><a href="dashboard-ecommerce.html" class="">User reviews</a></li>
+                            <li class=""><a href="dashboard-crm.html" class="">User inputs</a></li>
+                        </ul>
+                    </li>
+                }
+
+                </ul>
+            </div>
+        }
+
+    </div>
+</nav>
+<!-- [ navigation menu ] end -->

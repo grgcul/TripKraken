@@ -5,6 +5,8 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
+using TripKraken.DataSource.Model;
+using TripKraken.Model.Main;
 using TripKraken.Web.Models;
 
 namespace TripKraken.Web

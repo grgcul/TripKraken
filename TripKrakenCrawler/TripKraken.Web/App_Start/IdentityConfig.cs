@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using TripKraken.DataSource.Model;
+using TripKraken.Model.Main;
 using TripKraken.Web.Models;
 
 namespace TripKraken.Web

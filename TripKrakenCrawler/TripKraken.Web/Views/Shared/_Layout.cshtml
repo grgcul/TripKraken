@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@*<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -41,4 +41,236 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
+</html>*@
+
+@*New deisigne*@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Country info."/>
+    <meta name="keywords" content="travel, country, info">
+    <meta name="author" content="Grgur" />
+
+    <!-- Favicon icon -->
+    <link rel="icon" href="~/assets/images/favicon.ico" type="image/x-icon">
+    <!-- fontawesome icon -->
+    <link rel="stylesheet" href="~/assets/fonts/fontawesome/css/fontawesome-all.min.css">
+    <!-- animation css -->
+    <link rel="stylesheet" href="~/assets/plugins/animation/css/animate.min.css">
+    <!-- notification css -->
+    <link rel="stylesheet" href="~/assets/plugins/notification/css/notification.min.css">
+    <!-- vendor css -->
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    
+    <!-- select2 css -->
+    <link rel="stylesheet" href="~/assets/plugins/select2/css/select2.min.css">
+    <!-- multi-select css -->
+    <link rel="stylesheet" href="~/assets/plugins/multi-select/css/multi-select.css">
+
+</head>
+
+<body>
+    <!-- [ Pre-loader ] start -->
+    @*<div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>*@
+    <!-- [ Pre-loader ] End -->
+    <!-- [ Header ] start -->
+    @{
+        Html.RenderPartial("_Header");
+    }
+    <!-- [ Header ] end -->
+    <!-- [ navigation menu ] start -->
+    @{
+        Html.RenderPartial("_Navigation");
+    }
+    <!-- [ navigation menu ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            @RenderSection("breadcrump", required: false)
+
+                        </div>
+                    </div>
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            @RenderBody()
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+    <!-- Warning Section start -->
+    <!-- Older IE warning message -->
+    <!--[if lt IE 11]>
+        <div class="ie-warning">
+            <h1>Warning!!</h1>
+            <p>You are using an outdated version of Internet Explorer, please upgrade
+               <br/>to any of the following web browsers to access this website.
+            </p>
+            <div class="iew-container">
+                <ul class="iew-download">
+                    <li>
+                        <a href="http://www.google.com/chrome/">
+                            <img src="~/assets/images/browser/chrome.png" alt="Chrome">
+                            <div>Chrome</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.mozilla.org/en-US/firefox/new/">
+                            <img src="~/assets/images/browser/firefox.png" alt="Firefox">
+                            <div>Firefox</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.opera.com">
+                            <img src="~/assets/images/browser/opera.png" alt="Opera">
+                            <div>Opera</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.apple.com/safari/">
+                            <img src="~/assets/images/browser/safari.png" alt="Safari">
+                            <div>Safari</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                            <img src="~/assets/images/browser/ie.png" alt="">
+                            <div>IE (11 & above)</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <p>Sorry for the inconvenience!</p>
+        </div>
+    <![endif]-->
+    <!-- Warning Section Ends -->
+    <!-- Required Js -->
+    <script src="~/assets/js/vendor-all.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="~/assets/js/pcoded.min.js"></script>
+    <!-- amchart js -->
+    <script src="~/assets/plugins/amchart/js/amcharts.js"></script>
+    <script src="~/assets/plugins/amchart/js/gauge.js"></script>
+    <script src="~/assets/plugins/amchart/js/serial.js"></script>
+    <script src="~/assets/plugins/amchart/js/light.js"></script>
+    <script src="~/assets/plugins/amchart/js/pie.min.js"></script>
+    <script src="~/assets/plugins/amchart/js/ammap.min.js"></script>
+    <script src="~/assets/plugins/amchart/js/radar.js"></script>
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/maps.js"></script>
+    <script src="https://www.amcharts.com/lib/4/geodata/worldLow.js"></script>
+    <script src="https://www.amcharts.com/lib/4/geodata/usaLow.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+<!-- notification Js -->
+    <script src="~/assets/plugins/notification/js/bootstrap-growl.min.js"></script>
+@RenderSection("scripts", required: false)
+
+    <!-- dashboard-custom js -->
+<script>
+
+</script>
+    <script>
+        //   /**
+        //* ---------------------------------------
+        //* This demo was created using amCharts 4.
+        //*
+        //* For more information visit:
+        //* https://www.amcharts.com/
+        //*
+        //* Documentation is available at:
+        //* https://www.amcharts.com/docs/v4/
+        //* ---------------------------------------
+        //*/
+
+        //   // Themes begin
+        //   am4core.useTheme(am4themes_animated);
+        //   // Themes end
+
+        //   // Create map instance
+        //   var chart = am4core.create("chartdiv", am4maps.MapChart);
+
+        //   // Set map definition
+        //   chart.geodata = am4geodata_worldLow;
+
+        //   // Set projection
+        //   chart.projection = new am4maps.projections.Miller();
+
+        //   // Series for World map
+        //   var worldSeries = chart.series.push(new am4maps.MapPolygonSeries());
+        //   worldSeries.exclude = ["AQ"];
+        //   worldSeries.useGeodata = true;
+
+        //   var polygonTemplate = worldSeries.mapPolygons.template;
+        //   polygonTemplate.tooltipText = "{name}";
+        //   polygonTemplate.fill = chart.colors.getIndex(0);
+        //   polygonTemplate.nonScalingStroke = true;
+
+        //   polygonTemplate.events.on("hit",
+        //       function (ev) {
+        //           alert(ev.target);
+        //           if (lastSelected) {
+        //               // This line serves multiple purposes:
+        //               // 1. Clicking a country twice actually de-activates, the line below
+        //               //    de-activates it in advance, so the toggle then re-activates, making it
+        //               //    appear as if it was never de-activated to begin with.
+        //               // 2. Previously activated countries should be de-activated.
+        //               lastSelected.isActive = false;
+        //           }
+        //           ev.target.series.chart.zoomToMapObject(ev.target);
+        //           if (lastSelected !== ev.target) {
+        //               lastSelected = ev.target;
+        //           }
+        //       });
+
+        //   // Hover state
+        //   var hs = polygonTemplate.states.create("hover");
+        //   hs.properties.fill = am4core.color("#367B25");
+
+        //   // Series for United States map
+        //   var usaSeries = chart.series.push(new am4maps.MapPolygonSeries());
+        //   usaSeries.geodata = am4geodata_usaLow;
+
+        //   var usPolygonTemplate = usaSeries.mapPolygons.template;
+        //   usPolygonTemplate.tooltipText = "{name}";
+        //   usPolygonTemplate.fill = chart.colors.getIndex(1);
+        //   usPolygonTemplate.nonScalingStroke = true;
+
+        //   // Hover state
+        //   var hs = usPolygonTemplate.states.create("hover");
+        //   hs.properties.fill = am4core.color("#367B25");
+
+        //   var homeButton = new am4core.Button();
+
+    </script>
+
+</body>
+
 </html>
+

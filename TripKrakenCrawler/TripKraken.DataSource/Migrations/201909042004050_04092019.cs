@@ -1,0 +1,18 @@
+﻿namespace TripKraken.DataSource.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class _04092019 : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.Currencies", "Code", c => c.String());
+        }
+        
+        public override void Down()
+        {
+            DropColumn("dbo.Currencies", "Code");
+        }
+    }
+}
