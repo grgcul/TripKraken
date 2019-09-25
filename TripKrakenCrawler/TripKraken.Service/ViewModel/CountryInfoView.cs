@@ -24,8 +24,10 @@ namespace TripKraken.Service.ViewModel
         // /120
         // Facts
         public decimal? PolutionRate { get; set; }
-
-        public string WiredInternetSpeed { get; set; }
+        public decimal? LandArea { get; set; }
+        public decimal? Population { get; set; }
+        public decimal? Density { get; set; }
+        public decimal? WiredInternetSpeed { get; set; }
 
         public string MobileInternetSpeed { get; set; }
 
@@ -34,7 +36,8 @@ namespace TripKraken.Service.ViewModel
         public Dictionary<string, decimal> CostOfLifeAvg { get; set; }
         public Dictionary<string, decimal> CrimeRates { get; set; }
 
-        public decimal CrimeRateAvg { get; set; }
-        public decimal HealthCareAvg { get; set; }
+        public decimal? CrimeRateAvg { get; set; }
+        public decimal? SafetyRateAvg { get; set; }
+        public decimal? HealthCareAvg { get; set; }
     }
 }

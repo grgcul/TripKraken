@@ -70,6 +70,51 @@ namespace TripKraken.Crawler.Service
             }
             dbContext.SaveChanges();
         }
+
+
+        public void ScrapingBasicCountryInfo()
+        {
+            Console.WriteLine("Scraping starting...");
+            using (var db = new ApplicationDbContext())
+            {
+                var timespan = TimeSpan.FromMinutes(3);
+                using (var driver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), new ChromeOptions(), timespan))
+                {
+                    driver.Navigate().GoToUrl($@"https://www.worldometers.info/geography/alphabetical-list-of-countries/");
+                    var element = driver.FindElementByClassName("table-condensed");
+                    var elements = element.FindElements(By.TagName("tbody")).First().FindElements(By.TagName("tr")).ToList();
+                    Console.WriteLine($"Scraping basic info\n");
+                    foreach (var elementItem in elements)
+                    {
+                        try
+                        {
+                            if (!(elementItem.FindElements(By.TagName("th")).Count > 0))
+                            {
+                                var forCountry = elementItem.FindElements(By.TagName("td")).ElementAt(1).Text;
+                                var population = elementItem.FindElements(By.TagName("td")).ElementAt(2).Text;
+                                var landSize = elementItem.FindElements(By.TagName("td")).ElementAt(3).Text;
+                                var density = elementItem.FindElements(By.TagName("td")).ElementAt(4).Text;
+
+                                var result = db.CountryInfo.SingleOrDefault(x => x.Country.Name == forCountry);
+                                result.Population = Convert.ToDecimal(population);
+                                result.Density = Convert.ToDecimal(density);
+                                result.LandArea = Convert.ToDecimal(landSize);
+                                Console.WriteLine($@"Inserting value for {forCountry}- ");
+
+                                db.SaveChanges();
+                            }
+                        }
+                        catch { }
+
+                    }
+                    //System.Threading.Thread.Sleep(5000);
+                    Console.WriteLine("\n");
+                    db.SaveChanges();
+                }
+            }
+            Console.WriteLine("Scraping ended...");
+        }
+
         public void ScrapeDataInternetSpeed(Response response)
         {
             ApplicationDbContext dbContext = new ApplicationDbContext();
@@ -80,28 +125,19 @@ namespace TripKraken.Crawler.Service
                 // Read option value
                 if (item.ChildNodes.Length > 7)
                 {
-                    string strSpeed = item.ChildNodes[7].TextContentClean;
-                    string strTitle = item.ChildNodes[5].ChildNodes[1].TextContentClean;
-                    if (!String.IsNullOrEmpty(strTitle) && !dbContext.CountryInfo.Any(x => x.Country.Name == strTitle))
+                    try
                     {
-                        if (dbContext.Country.SingleOrDefault(x => x.Name == strTitle) != null)
-                        {
-                            dbContext.CountryInfo.Add(new CountryInfo()
-                            {
-                                CreateDate = DateTime.Now,
-                                UpdateDate = DateTime.Now,
-                                CountryID = dbContext.Country.SingleOrDefault(x => x.Name == strTitle).Id,
-                                WiredInternetSpeed = strSpeed,
+                        string strSpeed = item.ChildNodes[7].TextContentClean;
+                        string strTitle = item.ChildNodes[5].ChildNodes[1].TextContentClean;
 
-                            });
-                            // Save Result to File
-                            Scrape(new ScrapedData()
-                            {
-                                {"CityName", strTitle},
-                                {"AvgInternetSpeed", strSpeed}
-                            }, "ScraperInternetSpeed.Json");
-                        }
+                        var result = dbContext.CountryInfo.SingleOrDefault(x => x.Country.Name == strTitle);
+                        result.WiredInternetSpeed = strSpeed;
+                        Console.WriteLine($@"Inserting value for {strTitle}- ");
+
+                        dbContext.SaveChanges();
                     }
+                    catch { }
+
                 }
             }
             dbContext.SaveChanges();

@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using TripKraken.DataSource.Model;
 using TripKraken.Model.Main;
+using TripKraken.Service;
 using TripKraken.Web.Models;
 
 namespace TripKraken.Web

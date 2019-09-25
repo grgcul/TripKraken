@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TripKraken.Model.Main;
+using TripKraken.Service;
 using TripKraken.Web.Models;
 
 namespace TripKraken.Web.Controllers

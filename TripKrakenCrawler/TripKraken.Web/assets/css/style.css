@@ -8437,7 +8437,7 @@ a.btn-theme.active {
 .progress {
   height: 12px;
   font-size: 10px;
-  background-color: #f4f7fa;
+  /*background-color: #f4f7fa;*/
   border-radius: 0;
   overflow: visible;
 }
@@ -8466,8 +8466,12 @@ a.btn-theme.active {
   background: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%);
 }
 .progress-bar.progress-c-theme2 {
-  background: linear-gradient(-135deg, #899FD4 0%, #A389D4 100%);
+  background: linear-gradient(-135deg, #899FD4 0%, #A389D4 100%)!important;
 }
+
+    .progress-bar.progress-c-theme62 {
+        background: linear-gradient(-235deg, #00FF00 0%, #7FFF00 50%,#f4c22b 75%,#FF0000 100%);
+    }
 
 /**====== Progress css end ======**/
 /**  =====================
@@ -10221,21 +10225,31 @@ div.code-toolbar > .toolbar span:hover {
   right: 0;
 }
 .i-main .i-block .flag-icon-background {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
+}
+.icon-flag-custom {
+    height:50px;
+    width:100px;
 }
 
+.no-padding-l {
+    padding-left:0px!important
+}
+.no-margin-l {
+    margin-left: 0px !important
+}
 /**====== Icon layouts css end ======**/
 /**  =====================
       Calendar css start
 ==========================  **/
 .external-events .fc-event {
-  color: #fff;
-  cursor: move;
-  padding: 5px 18px;
-  margin-top: 5px;
-  background: #04a9f5;
-  border-color: #04a9f5;
+    color: #fff;
+    cursor: move;
+    padding: 5px 18px;
+    margin-top: 5px;
+    background: #04a9f5;
+    border-color: #04a9f5;
 }
 
 .calendar a:not([href]):not([tabindex]), .calendar a:not([href]):not([tabindex]):focus, .calendar a:not([href]):not([tabindex]):hover {
@@ -10597,3 +10611,18 @@ div.code-toolbar > .toolbar span:hover {
   }
 }
 /**====== File Upload css end ======**/
+/*custom*/
+#chartdiv {
+    width: 100%;
+    max-width:100%;
+    height: 500px;
+}
+
+#hiddenchartdiv{
+    width: 100%;
+    max-width:100%;
+    height: 500px;
+    visibility:hidden;
+    position:absolute;
+    top:0px;
+}

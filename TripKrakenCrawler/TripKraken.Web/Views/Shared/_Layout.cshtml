@@ -49,18 +49,16 @@
 <html lang="en">
 
 <head>
-    <title></title>
-    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <title>Trip Kraken</title>
     <!--[if lt IE 11]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
     <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="Country info."/>
+    <meta name="description" content="Country info." />
     <meta name="keywords" content="travel, country, info">
     <meta name="author" content="Grgur" />
 
@@ -74,34 +72,33 @@
     <link rel="stylesheet" href="~/assets/plugins/notification/css/notification.min.css">
     <!-- vendor css -->
     <link rel="stylesheet" href="~/assets/css/style.css">
-    
+    <!-- Flag icon -->
+    <link rel="stylesheet" href="~/assets/fonts/flag/css/flag-icon.min.css">
     <!-- select2 css -->
     <link rel="stylesheet" href="~/assets/plugins/select2/css/select2.min.css">
     <!-- multi-select css -->
     <link rel="stylesheet" href="~/assets/plugins/multi-select/css/multi-select.css">
 
+    <!-- pnotify css -->
+    <link rel="stylesheet" href="~/assets/plugins/pnotify/css/pnotify.custom.min.css">
+    <!-- pnotify-custom css -->
+    <link rel="stylesheet" href="~/assets/css/pages/pnotify.css">
 </head>
 
 <body>
-    <!-- [ Pre-loader ] start -->
     @*<div class="loader-bg">
-        <div class="loader-track">
-            <div class="loader-fill"></div>
-        </div>
-    </div>*@
-    <!-- [ Pre-loader ] End -->
-    <!-- [ Header ] start -->
+            <div class="loader-track">
+                <div class="loader-fill"></div>
+            </div>
+        </div>*@
     @{
-        Html.RenderPartial("_Header");
+                    /**/
+
+                    Html.RenderPartial("_Header");
     }
-    <!-- [ Header ] end -->
-    <!-- [ navigation menu ] start -->
     @{
         Html.RenderPartial("_Navigation");
     }
-    <!-- [ navigation menu ] end -->
-
-    <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
             <div class="pcoded-content">
@@ -123,7 +120,6 @@
             </div>
         </div>
     </div>
-    <!-- [ Main Content ] end -->
     <!-- Warning Section start -->
     <!-- Older IE warning message -->
     <!--[if lt IE 11]>
@@ -187,86 +183,45 @@
     <script src="https://www.amcharts.com/lib/4/maps.js"></script>
     <script src="https://www.amcharts.com/lib/4/geodata/worldLow.js"></script>
     <script src="https://www.amcharts.com/lib/4/geodata/usaLow.js"></script>
-<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-<!-- notification Js -->
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+    <!-- notification Js -->
     <script src="~/assets/plugins/notification/js/bootstrap-growl.min.js"></script>
-@RenderSection("scripts", required: false)
+    <script src="~/assets/plugins/pnotify/js/pnotify.custom.min.js"></script>
+    <script src="~/assets/plugins/pnotify/js/notify-event.js"></script>
+    @RenderSection("scripts", required: false)
+
+    <script>
+        @if (Session["CreateTxt"] != null)
+        {
+            <text>
+        new PNotify({
+            title: 'Success',
+            text: '@Session["CreateTxt"].ToString()',
+            type: 'success'
+        });
+            </text>
+            Session["CreateTxt"] = null;
+        }
+
+        @if (Session["DeleteTxt"] != null)
+        {
+            <text>
+        new PNotify({
+            title: 'Deleted!',
+            text: '@Session["DeleteTxt"].ToString()',
+            type: 'success'
+        });
+            </text>
+            Session["DeleteTxt"] = null;
+        }
+
+
+
+
+    </script>
 
     <!-- dashboard-custom js -->
-<script>
-
-</script>
     <script>
-        //   /**
-        //* ---------------------------------------
-        //* This demo was created using amCharts 4.
-        //*
-        //* For more information visit:
-        //* https://www.amcharts.com/
-        //*
-        //* Documentation is available at:
-        //* https://www.amcharts.com/docs/v4/
-        //* ---------------------------------------
-        //*/
-
-        //   // Themes begin
-        //   am4core.useTheme(am4themes_animated);
-        //   // Themes end
-
-        //   // Create map instance
-        //   var chart = am4core.create("chartdiv", am4maps.MapChart);
-
-        //   // Set map definition
-        //   chart.geodata = am4geodata_worldLow;
-
-        //   // Set projection
-        //   chart.projection = new am4maps.projections.Miller();
-
-        //   // Series for World map
-        //   var worldSeries = chart.series.push(new am4maps.MapPolygonSeries());
-        //   worldSeries.exclude = ["AQ"];
-        //   worldSeries.useGeodata = true;
-
-        //   var polygonTemplate = worldSeries.mapPolygons.template;
-        //   polygonTemplate.tooltipText = "{name}";
-        //   polygonTemplate.fill = chart.colors.getIndex(0);
-        //   polygonTemplate.nonScalingStroke = true;
-
-        //   polygonTemplate.events.on("hit",
-        //       function (ev) {
-        //           alert(ev.target);
-        //           if (lastSelected) {
-        //               // This line serves multiple purposes:
-        //               // 1. Clicking a country twice actually de-activates, the line below
-        //               //    de-activates it in advance, so the toggle then re-activates, making it
-        //               //    appear as if it was never de-activated to begin with.
-        //               // 2. Previously activated countries should be de-activated.
-        //               lastSelected.isActive = false;
-        //           }
-        //           ev.target.series.chart.zoomToMapObject(ev.target);
-        //           if (lastSelected !== ev.target) {
-        //               lastSelected = ev.target;
-        //           }
-        //       });
-
-        //   // Hover state
-        //   var hs = polygonTemplate.states.create("hover");
-        //   hs.properties.fill = am4core.color("#367B25");
-
-        //   // Series for United States map
-        //   var usaSeries = chart.series.push(new am4maps.MapPolygonSeries());
-        //   usaSeries.geodata = am4geodata_usaLow;
-
-        //   var usPolygonTemplate = usaSeries.mapPolygons.template;
-        //   usPolygonTemplate.tooltipText = "{name}";
-        //   usPolygonTemplate.fill = chart.colors.getIndex(1);
-        //   usPolygonTemplate.nonScalingStroke = true;
-
-        //   // Hover state
-        //   var hs = usPolygonTemplate.states.create("hover");
-        //   hs.properties.fill = am4core.color("#367B25");
-
-        //   var homeButton = new am4core.Button();
 
     </script>
 

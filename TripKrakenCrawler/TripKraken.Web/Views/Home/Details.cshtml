@@ -3,5 +3,335 @@
 @{
     /**/
 
-    ViewBag.Title =" - Trip kraken";
+    ViewBag.Title = " - Trip kraken";
 }
+@section breadcrump{
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="page-header-title">
+                <h4 class="m-b-10">Details - @Model.Country.Name</h4>
+            </div>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"><i class="feather icon-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="#!">Details - @Model.Country.Name</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-6">
+            <div class="i-main no-margin-l" id="icon-wrapper" style="float: right;">
+                <div class="i-block no-margin-l" data-clipboard-text="flag flag-icon-background flag-icon-@(Session["countryCode"]!=null ? (Session["countryCode"].ToString().ToLower() ??""):"")" data-filter="flag-icon-af" data-toggle="tooltip" title="" data-original-title="flag-icon-af">
+                    <i class="no-padding-l flag flag-icon-background flag-icon-squared flag-icon-@(Session["countryCode"].ToString().ToLower() ??"") icon-flag-custom"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <hr />
+}
+@{
+    Html.RenderAction("Search", "Home", new { actionP = "Index", controllerP = "Home" });
+}
+
+<div class="row">
+
+    <div class="col-lg-3">
+
+    </div>
+</div>
+<div class="row m-t-45">
+    <div class="col-lg-6">
+        <div id="chartdiv"></div>
+    </div>
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-6 ">
+                @*<div class="col-lg-6 no-padding-l"></div>*@
+                @if (Model.Population != null)
+                {
+                    <br />
+                    <br />
+                    <div class="card-block">
+                        <h6 class="mb-4">Population</h6>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-9">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="fas fa-users"></i> <span class="m-l-10"> @((int?)Model.Population)</span></h3>
+                            </div>
+
+                            <div class="col-3 text-right">
+                                @*<p class="m-b-0">@(Math.Round((double)(Model.Population / 1420062022) * 100,2))%</p>*@
+                            </div>
+                        </div>
+                        <div class="progress m-t-30" style="height: 7px;">
+                            <div class="progress-bar progress-c-theme" role="progressbar" style="width: @(((Model.Population / 1420062022) * 100).ToString().Replace(",","."))%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                }
+                @if (Model.LandArea != null)
+                {
+                    <br />
+                    <br />
+                    <div class="card-block">
+                        <h6 class="mb-4">Land area</h6>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-9">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="fas fa-arrows-alt-h"></i> <span class="m-l-10"> @((int)Model.LandArea) km2</span></h3>
+                            </div>
+
+                            <div class="col-3 text-right">
+                                @*<p class="m-b-0">@(Math.Round((double) (Model.LandArea / 17098242 * 100), 2)) %</p>*@
+                            </div>
+                        </div>
+                        <div class="progress m-t-30" style="height: 7px;">
+                            <div class="progress-bar progress-c-theme" role="progressbar" style="width: @(((Model.LandArea / 17098242) * 100).ToString().Replace(",","."))%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-6">
+                <br />
+                <br />
+                @if (Model.WiredInternetSpeed != null)
+                {
+                    <div class="card-block">
+                        <h6 class="mb-4">Internet speed</h6>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-9">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="fas fa-signal"></i> <span class="m-l-10"> @(Model.WiredInternetSpeed.ToString().Replace(",", ".")) Mbps</span></h3>
+                            </div>
+
+                            <div class="col-3 text-right">
+                                @*<p class="m-b-0">@(Math.Round((double) (Convert.ToDouble(Model.WiredInternetSpeed) / 200 * 100), 2)) %</p>*@
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="progress m-t-30" style="height: 7px;">
+                        <div class="progress-bar progress-c-theme" role="progressbar" style="width: @(( (Model.WiredInternetSpeed / 200) * 100).ToString().Replace(",","."))%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                }
+
+                @if (Model.Density != null)
+                {
+                    <br />
+                    <br />
+                    <div class="card-block">
+                        <h6 class="mb-4">Population density</h6>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-9">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="fas fas fa-user-friends"></i> <span class="m-l-10"> @(Convert.ToDouble(Model.Density)) P/Km²</span></h3>
+                            </div>
+
+                            <div class="col-3 text-right">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="progress m-t-30" style="height: 7px;">
+                        <div class="progress-bar progress-c-theme" role="progressbar" style="width: @(( (Convert.ToDouble(Model.Density) / 5000) * 100).ToString().Replace(",","."))%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                }
+            </div>
+            @if (Model.CrimeRateAvg != null)
+            {
+                <div class="col-lg-6">
+                    <br /><br />
+                    <div class="card-block">
+                        <h6 class="mb-4">Crime rate</h6>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-9">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="fas fa-user-secret"></i> <span class="m-l-10"> @(Convert.ToDouble(Model.CrimeRateAvg))</span></h3>
+                            </div>
+
+                            <div class="col-3 text-right">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="progress m-t-30" style="height: 7px;">
+                        <div class="progress-bar progress-c-theme" role="progressbar" style="width: @( (Convert.ToDouble(Model.CrimeRateAvg)).ToString().Replace(",","."))%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.SafetyRateAvg != null)
+            {
+                <div class="col-lg-6">
+                    <br /><br />
+                    <div class="card-block">
+                        <h6 class="mb-4">Safety rate</h6>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-9">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="fas fa-user-shield"></i> <span class="m-l-10"> @(Convert.ToDouble(Model.SafetyRateAvg))</span></h3>
+                            </div>
+
+                            <div class="col-3 text-right">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="progress m-t-30" style="height: 7px;">
+                        <div class="progress-bar progress-c-theme" role="progressbar" style="width: @( (Convert.ToDouble(Model.SafetyRateAvg)).ToString().Replace(",","."))%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.PolutionRate != null)
+            {
+                <div class="col-lg-6">
+                    <br /><br />
+                    <div class="card-block">
+                        <h6 class="mb-4">Pollution rate</h6>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-9">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="fas fas fa-thermometer-half"></i> <span class="m-l-10"> @(Convert.ToDouble(Model.PolutionRate))</span></h3>
+                            </div>
+
+                            <div class="col-3 text-right">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="progress m-t-30" style="height: 7px;">
+                        <div class="progress-bar progress-c-theme" role="progressbar" style="width: @Model.PolutionRate.ToString().Replace(",",".")%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.HealthCareAvg != null)
+            {
+                <div class="col-lg-6">
+                    <br /><br />
+                    <div class="card-block">
+                        <h6 class="mb-4">Health care</h6>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-9">
+                                <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="fas fas fa-ambulance"></i> <span class="m-l-10"> @Model.HealthCareAvg</span></h3>
+                            </div>
+
+                            <div class="col-3 text-right">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="progress m-t-30" style="height: 7px;">
+                        <div class="progress-bar progress-c-theme" role="progressbar" style="width: @(Model.HealthCareAvg)%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-lg-6">
+
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Prices & salaries</h3>
+                        <span class="d-block m-t-5">Basic values for cost of life</span>
+                    </div>
+                    <div class="card-block table-border-style f-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Apartment 1 bedroom</td>
+                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Apartment (1 bedroom) in City Centre").Value.ToString("N0") €</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gasoline 1L</td>
+                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Gasoline (1 liter)").Value.ToString("N0") €</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Monthly Net Salary</td>
+                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Average Monthly Net Salary (After Tax)").Value.ToString("N0") €</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mortgage Interest</td>
+                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Mortgage Interest Rate in Percentages (%), Yearly, for 20 Years Fixed-Rate").Value.ToString("N0") %</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Meal in restaurant</td>
+                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Meal, Inexpensive Restaurant").Value.ToString("N0") €</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Water 1.5L bottle</td>
+                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Water (1.5 liter bottle)").Value.ToString("N0") €</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Beer 0,5L</td>
+                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Domestic Beer (0.5 liter draught)").Value €</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/maps.js"></script>
+    <script src="https://www.amcharts.com/lib/4/geodata/worldHigh.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+    <script>
+
+
+am4core.useTheme(am4themes_animated);
+
+
+
+var countryCodes = ["@Model.Country.Code"];
+
+var chart = am4core.create("chartdiv", am4maps.MapChart);
+
+
+try {
+	chart.geodata = am4geodata_worldHigh;
+}
+catch (e) {
+	chart.raiseCriticalError(new Error("Map geodata could not be loaded. Please download the latest <a href=\"https://www.amcharts.com/download/download-v4/\">amcharts geodata</a> and extract its contents into the same directory as your amCharts files."));
+}
+
+chart.projection = new am4maps.projections.Mercator();
+chart.padding(10, 20, 10, 20);
+chart.minZoomLevel = 0.9;
+chart.zoomLevel = 0.9;
+chart.maxZoomLevel = 1;
+
+var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+polygonSeries.useGeodata = true;
+polygonSeries.include = ["@Model.Country.Code"];
+
+
+
+
+var label = chart.chartContainer.createChild(am4core.Label);
+label.x = 100;
+label.y = 100;
+label.fill = am4core.color("#000000");
+label.fontSize = 35;
+label.fontWeight = "bold";
+label.text = "@Model.Country.Name";
+label.fillOpacity = 0.2;
+    </script>
+}
+
