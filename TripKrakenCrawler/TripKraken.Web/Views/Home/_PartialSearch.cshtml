@@ -1,0 +1,27 @@
+﻿
+@model TripKraken.Service.ViewModel.SearchView
+<div class="row">
+
+    <div class="col-md-12">
+        @using (Html.BeginForm(Model.action, Model.controller, FormMethod.Post, new { id = "formCountries" }))
+        {
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Choose Country</label>
+                <div class="col-lg-6 no-padding-l">
+                    @Html.DropDownListFor(x => x.CountryId, new SelectList(Model.Countries, "Id", "Name"), "Choose country", htmlAttributes: new { @class = "form-control", id = "Country", onchange = "this.form.submit();" })
+                </div>
+
+                <input id="countryValue" type="text" class="form-control" placeholder="Text" name="countryName" hidden>
+                <div class="col-md-6 no-padding-l">
+                    @*<div class="i-main no-margin-l" id="icon-wrapper" style="float:right;">
+                        <div class="i-block no-margin-l" data-clipboard-text="flag flag-icon-background flag-icon-@(Session["countryCode"].ToString().ToLower() ??"")" data-filter="flag-icon-af" data-toggle="tooltip" title="" data-original-title="flag-icon-af">
+                            <i class="no-padding-l flag flag-icon-background flag-icon-squared flag-icon-@(Session["countryCode"].ToString().ToLower() ??"") icon-flag-custom"></i>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        }
+        <hr />
+    </div>
+
+</div>
