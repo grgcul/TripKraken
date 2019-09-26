@@ -14,29 +14,31 @@ namespace TripKraken.Crawler
         {
             var scrape = new ScrapeInfoService("https://www.numbeo.com/cost-of-living/",ScrapeData.Countries);
             var scrape2 = new ScrapeInfoService("https://www.speedtest.net/global-index", ScrapeData.InternetSpeed);
-            //scrape.ScrapeDataCostOfLifeValues();
+            scrape.ScrapeDataCostOfLifeValues();
+            scrape.ScrapeCrimeRate();
+
+            // Countries list
             //scrape.Start();
 
-            // Internet speed
-            scrape2.Start();
+            //// Internet speed
+            //scrape2.Start();
 
-            //Scrape redom
 
+            //// Scrape info run
             //scrape.ScrapeCrimeRateTypes();
-            //scrape.ScrapeCrimeRate();
+
+            //scrape.ScrapeDataCostOfLifeTypes();
+
+            //scrape.ScrapingBasicCountryInfo();
+
+            scrape.ScrapeCrimeRate();
+
+            //scrape.ScrapeDataCostOfLifeValues();
+
             //scrape.ScrapeHealthCare();
 
-            Console.WriteLine(@"Choose scraping:
-                                -- Scrape Cost of life
-                                -- Scrape Crime Rate
-                                -- Scrape Internet speed
-                                -- Scrape Health care
-                                -- Scrape Pollution
-                                -- Scrape Weather"
-            );
-            //scrape.ScrapingBasicCountryInfo();
-            // TODO-GC: For now using live weather and time zone, hard to scrape if we have just country
-            //scrape.ScrapeWeather();
+            //scrape.ScrapePollutionRate();
+
             Console.ReadKey();
         }
     }

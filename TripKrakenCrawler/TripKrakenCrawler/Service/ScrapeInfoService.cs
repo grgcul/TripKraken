@@ -49,32 +49,64 @@ namespace TripKraken.Crawler.Service
 
         public void ScrapeDataCountries(Response response)
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
-
-            // Loop on all options
-            foreach (var item in response.GetElementById("country").ChildNodes)
+            using (var db = new ApplicationDbContext())
             {
-                // Read option value
-                string strTitle = item.TextContentClean;
-                if (!String.IsNullOrEmpty(strTitle) && !dbContext.Country.Any(x => x.Name == strTitle))
+                if (!db.Country.Any())
                 {
-                    dbContext.Country.Add(new Country()
+                    Console.WriteLine("Scraping country...");
+                    // Loop on all options
+                    foreach (var item in response.GetElementById("country").ChildNodes)
                     {
-                        CreateDate = DateTime.Now,
-                        UpdateDate = DateTime.Now,
-                        Name = strTitle,
-                        Link = strTitle.Replace(' ', '+')
-                    });
-                    Console.WriteLine($"Row inserted: {strTitle}");
+                        // Read option value
+                        string strTitle = item.TextContentClean;
+                        if (!String.IsNullOrEmpty(strTitle) && !db.Country.Any(x => x.Name == strTitle))
+                        {
+                            db.Country.Add(new Country()
+                            {
+                                CreateDate = DateTime.Now,
+                                UpdateDate = DateTime.Now,
+                                Name = strTitle,
+                                Link = strTitle.Replace(' ', '+')
+                            });
+                            Console.WriteLine($"Row inserted: {strTitle}");
+                        }
+                    }
+                    db.SaveChanges();
+                }
+
+            }
+        }
+
+        public void InitCountryInfo()
+        {
+            Console.WriteLine("Scraping country info...");
+            using (var db = new ApplicationDbContext())
+            {
+                foreach (var countryItem in db.Country.ToList())
+                {
+                    try
+                    {
+                        if (!db.CountryInfo.Any(x => x.CountryID == countryItem.Id))
+                        {
+                            var countryInf = new CountryInfo()
+                            {
+                                CountryID = countryItem.Id,
+                                CreateDate = DateTime.Now,
+                                UpdateDate = DateTime.Now
+                            };
+                            db.CountryInfo.Add(countryInf);
+                            db.SaveChanges();
+                        }
+                    }
+                    catch { }
                 }
             }
-            dbContext.SaveChanges();
         }
 
 
         public void ScrapingBasicCountryInfo()
         {
-            Console.WriteLine("Scraping starting...");
+            Console.WriteLine("Scraping basic country info starting...");
             using (var db = new ApplicationDbContext())
             {
                 var timespan = TimeSpan.FromMinutes(3);
@@ -117,6 +149,7 @@ namespace TripKraken.Crawler.Service
 
         public void ScrapeDataInternetSpeed(Response response)
         {
+            Console.WriteLine("Scraping internet speed starting...");
             ApplicationDbContext dbContext = new ApplicationDbContext();
 
             // Loop on all options
@@ -147,6 +180,7 @@ namespace TripKraken.Crawler.Service
         // Cost of life types using Croatia for default
         public void ScrapeDataCostOfLifeTypes()
         {
+            Console.WriteLine("Scraping Cost Of Life Types...");
             using (var driver = new ChromeDriver())
             {
                 driver.Navigate().GoToUrl("https://www.numbeo.com/cost-of-living/country_result.jsp?country=Croatia");
@@ -154,6 +188,9 @@ namespace TripKraken.Crawler.Service
                 var elements = element.FindElements(By.TagName("tbody")).First().FindElements(By.TagName("tr")).ToList();
                 using (var db = new ApplicationDbContext())
                 {
+                    if (!db.PriceForType.Any())
+                    {
+
                     foreach (var elementItem in elements)
                     {
                         if (!(elementItem.FindElements(By.TagName("th")).Count > 0))
@@ -175,6 +212,12 @@ namespace TripKraken.Crawler.Service
                         }
                     }
                     db.SaveChanges();
+
+                    }
+                    else
+                    {
+                        Console.WriteLine($@"Already inserted.");
+                    }
                 }
             }
         }
@@ -189,30 +232,33 @@ namespace TripKraken.Crawler.Service
                 var elements = element.FindElements(By.TagName("tbody")).First().FindElements(By.TagName("tr")).ToList();
                 using (var db = new ApplicationDbContext())
                 {
-                    foreach (var elementItem in elements)
+                    if (!db.CrimeRateType.Any())
                     {
-                        if (!(elementItem.FindElements(By.TagName("th")).Count > 0))
+                        foreach (var elementItem in elements)
                         {
-                            var crimeType = elementItem.FindElements(By.TagName("td")).First().Text;
-                            if (!db.CrimeRateType.Any(x => x.Name == crimeType))
+                            if (!(elementItem.FindElements(By.TagName("th")).Count > 0))
                             {
-                                db.CrimeRateType.Add(new CrimeRateType()
+                                var crimeType = elementItem.FindElements(By.TagName("td")).First().Text;
+                                if (!db.CrimeRateType.Any(x => x.Name == crimeType))
                                 {
-                                    Name = crimeType
-                                });
-                                Console.WriteLine($@"Inserting type: {crimeType}");
-                            }
-                            else
-                            {
-                                Console.WriteLine($@"Duplicate type: {crimeType}");
-                            }
+                                    db.CrimeRateType.Add(new CrimeRateType()
+                                    {
+                                        Name = crimeType
+                                    });
+                                    Console.WriteLine($@"Inserting type: {crimeType}");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($@"Duplicate type: {crimeType}");
+                                }
 
+                            }
                         }
-                    }
 
-                    db.CrimeRateType.Add(new CrimeRateType() { Name = "TotalCrimeRate" });
-                    db.CrimeRateType.Add(new CrimeRateType() { Name = "TotalSafetyRate" });
-                    db.SaveChanges();
+                        db.CrimeRateType.Add(new CrimeRateType() { Name = "TotalCrimeRate" });
+                        db.CrimeRateType.Add(new CrimeRateType() { Name = "TotalSafetyRate" });
+                        db.SaveChanges();
+                    }
                 }
             }
         }
@@ -231,56 +277,71 @@ namespace TripKraken.Crawler.Service
 
                     foreach (var countryItem in db.Country.ToList())
                     {
-                        if (!db.CountryInfo.Any(x => x.CountryID == countryItem.Id))
+                        try
                         {
-                            var countryInfo = new CountryInfo()
+                            if (!db.CountryInfo.Any(x => x.CountryID == countryItem.Id))
                             {
-                                CountryID = countryItem.Id,
-                                CreateDate = DateTime.Now,
-                                UpdateDate = DateTime.Now
-                            };
-
-                            driver.Navigate().GoToUrl($@"https://www.numbeo.com/cost-of-living/country_result.jsp?country={countryItem.Link}&displayCurrency=EUR");
-                            db.CountryInfo.Add(countryInfo);
-                            db.SaveChanges();
-                            var element = driver.FindElementByClassName("data_wide_table");
-                            var elements = element.FindElements(By.TagName("tbody")).First().FindElements(By.TagName("tr")).ToList();
-                            Console.WriteLine($"Scraping for ({countryItem.Name}): \n");
-                            foreach (var elementItem in elements)
-                            {
-                                try
+                                var countryInf = new CountryInfo()
                                 {
-                                    if (!(elementItem.FindElements(By.TagName("th")).Count > 0))
-                                    {
-                                        var priceType = elementItem.FindElements(By.TagName("td")).First().Text;
-                                        var priceValue = elementItem.FindElements(By.TagName("td")).ElementAt(1).Text;
-                                        priceValue = priceValue.Substring(0, priceValue.IndexOf(' ') > 0 ? priceValue.IndexOf(' ') : priceValue.Length);
-                                        //if (!db.CostOfLivingInfo.Any(x => x.CountryInfo.Country.Name == countryItem.Name && x.PriceForType.Name == priceType))
-                                        //{
-                                        db.CostOfLivingInfo.Add(new CostOfLivingInfo()
-                                        {
-                                            Value = Convert.ToDecimal(priceValue == "?" ? "0" : priceValue),
-                                            PriceForTypeID = db.PriceForType.First(x => x.Name == priceType).Id,
-                                            CountryInfoID = countryInfo.Id,
-                                            CreateDate = DateTime.Now,
-                                            UpdateDate = DateTime.Now
-                                        });
-                                        Console.WriteLine($@"Inserting value for - {priceType}");
-                                        //}
-                                        //else
-                                        //{
-                                        //    Console.WriteLine($@"Duplicate type: {priceType}");
-                                        //}
+                                    CountryID = countryItem.Id,
+                                    CreateDate = DateTime.Now,
+                                    UpdateDate = DateTime.Now
+                                };
+                                db.CountryInfo.Add(countryInf);
+                                db.SaveChanges();
+                            }
+                            if (!db.CostOfLivingInfo.Any(x => x.CountryInfo.CountryID == countryItem.Id))
+                                driver.Navigate().GoToUrl($@"https://www.numbeo.com/cost-of-living/country_result.jsp?country={countryItem.Link}&displayCurrency=EUR");
+                            {
 
+                                var countryInfo = db.CountryInfo.SingleOrDefault(x => x.CountryID == countryItem.Id);
+
+                                var element = driver.FindElementByClassName("data_wide_table");
+                                var elements = element.FindElements(By.TagName("tbody")).First().FindElements(By.TagName("tr")).ToList();
+                                Console.WriteLine($"Scraping for ({countryItem.Name}): \n");
+                                foreach (var elementItem in elements)
+                                {
+                                    try
+                                    {
+                                        if (!(elementItem.FindElements(By.TagName("th")).Count > 0))
+                                        {
+                                            var priceType = elementItem.FindElements(By.TagName("td")).First().Text;
+                                            var priceValue = elementItem.FindElements(By.TagName("td")).ElementAt(1).Text;
+                                            priceValue = priceValue.Substring(0, priceValue.IndexOf(' ') > 0 ? priceValue.IndexOf(' ') : priceValue.Length);
+                                            //if (!db.CostOfLivingInfo.Any(x => x.CountryInfo.Country.Name == countryItem.Name && x.PriceForType.Name == priceType))
+                                            //{
+                                            if (!db.CostOfLivingInfo.Any(x => x.PriceForType.Name == priceType && x.CountryInfoID == countryInfo.Id))
+                                            {
+                                                db.CostOfLivingInfo.Add(new CostOfLivingInfo()
+                                                {
+                                                    Value = Convert.ToDecimal(priceValue == "?" ? "0" : priceValue),
+                                                    PriceForTypeID = db.PriceForType.First(x => x.Name == priceType).Id,
+                                                    CountryInfoID = countryInfo.Id,
+                                                    CreateDate = DateTime.Now,
+                                                    UpdateDate = DateTime.Now
+                                                });
+                                                Console.WriteLine($@"Inserting value for - {priceType}");
+                                            }
+
+                                            //}
+                                            //else
+                                            //{
+                                            //    Console.WriteLine($@"Duplicate type: {priceType}");
+                                            //}
+
+                                        }
                                     }
+                                    catch { }
+
                                 }
-                                catch { }
+                                //System.Threading.Thread.Sleep(5000);
+                                Console.WriteLine("\n");
+                                db.SaveChanges();
 
                             }
-                            //System.Threading.Thread.Sleep(5000);
-                            Console.WriteLine("\n");
-                            db.SaveChanges();
                         }
+                        catch { }
+
 
                     }
 

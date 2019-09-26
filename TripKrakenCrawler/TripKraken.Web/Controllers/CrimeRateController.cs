@@ -9,6 +9,7 @@ using TripKraken.Service.ViewModel;
 
 namespace TripKraken.Web.Controllers
 {
+    [Authorize]
     public class CrimeRateController : Controller
     {
         // GET: CrimeRate
@@ -46,7 +47,7 @@ namespace TripKraken.Web.Controllers
 
         }
 
-        public ActionResult CreateCrimeRate(int? countryInfoId, string type)
+        public ActionResult Create(int? countryInfoId, string type)
         {
             ViewBag.PriceType = type;
             var userService = new UserService();
@@ -60,14 +61,38 @@ namespace TripKraken.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateCrimeRate(CreateCrimeRateInfo createModel)
+        public ActionResult Create(CreateCrimeRateInfo createModel)
         {
             var service = new CountryInfoService();
             var model = AutoMapper.Mapper.Map<CreateCrimeRateInfo, CrimeRateInfo>(createModel);
-            service.CreateCrimeRate(model);
 
-            Session["CreateTxt"] = "Successfully added value.";
-            return Index();
+            Session["CreateTxt"] = service.CreateCrimeRate(model);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var userService = new UserService();
+            var service = new CountryInfoService();
+
+            var result = service.GetCrimeRateInfo(id);
+            var model = new EditCrimeRateInfo()
+            {
+                Value = result.Value,
+                Id = id
+            };
+
+            return View("Edit", model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditCrimeRateInfo editModel)
+        {
+            var service = new CountryInfoService();
+            service.EditCrimeRate(editModel.Id, editModel.Value);
+            Session["CreateTxt"] = "Successfully edited value.";
+
+            return RedirectToAction("UserCrimeRateInput");
         }
 
         public ActionResult UserCrimeRateInput(string username = null, int? countryId = null, string countryName = null)
@@ -92,7 +117,7 @@ namespace TripKraken.Web.Controllers
         {
             var userSelected = Session["selectedUser"] != null ? Session["selectedUser"].ToString() : null;
             Session["countryId"] = countryId;
-            return UserCrimeRateInput(userSelected, countryId);
+            return RedirectToAction("UserCrimeRateInput", new { username = userSelected, countrId = countryId });
         }
 
 
@@ -103,7 +128,7 @@ namespace TripKraken.Web.Controllers
             var service = new CountryInfoService();
             service.DeleteCrimeRate(id);
             Session["DeleteTxt"] = "Successfully deleted value.";
-            return UserCrimeRateInput();
+            return RedirectToAction("UserCrimeRateInput");
         }
     }
 }

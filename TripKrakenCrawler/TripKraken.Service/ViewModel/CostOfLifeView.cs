@@ -22,6 +22,7 @@ namespace TripKraken.Service.ViewModel
         public int CountryInfoID { get; set; }
 
         // Prices
+        [Display(Name ="Value(EUR)")]
         [Range(0.001, 9999999, ErrorMessage = "Invalid value")]
         [Required]
         public decimal Value { get; set; }
@@ -35,6 +36,11 @@ namespace TripKraken.Service.ViewModel
 
     public class EditCostOfLivingInfoView
     {
+            public int Id { get; set; }
 
+            // Rate
+            [Range(0.001, 9999999, ErrorMessage = "Invalid value")]
+            [Required]
+            public decimal Value { get; set; }
     }
 }

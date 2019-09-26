@@ -19,7 +19,9 @@ namespace TripKraken.Service.ViewModel
         public int CrimeRateTypeID { get; set; }
         public int CountryInfoID { get; set; }
 
-        // Prices
+        // Rate
+        [Display(Name ="Value (0-100)")]
+        [Range(0.001, 100, ErrorMessage = "Invalid value")]
         [Required]
         public decimal Value { get; set; }
 
@@ -29,5 +31,16 @@ namespace TripKraken.Service.ViewModel
         public virtual CrimeRateType CrimeRateType { get; set; }
 
         public virtual CountryInfo CountryInfo { get; set; }
+    }
+
+    public class EditCrimeRateInfo
+    {
+        public int Id { get; set; }
+
+        // Rate
+        [Display(Name = "Value (0-100)")]
+        [Range(0.001, 100, ErrorMessage = "Invalid value")]
+        [Required]
+        public decimal Value { get; set; }
     }
 }

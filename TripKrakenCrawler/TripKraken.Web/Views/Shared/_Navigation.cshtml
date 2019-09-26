@@ -27,33 +27,31 @@
                     <li data-username="" class="nav-item active pcoded-trigger">
                         <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="fas fa-globe"></i></span><span class="pcoded-mtext">Country Data</span></a>
                         <ul class="pcoded-submenu">
-                            <li class="active"><a href="@Url.Action("Index","Home")" class="">Dashboard</a></li>
-                            <li class=""><a href="@Url.Action("BasicInfo","Home")" class="">Basic info</a></li>
-                            <li class=""><a href="@Url.Action("Index","CostOfLife")" class="">Cost of life</a></li>
-                            <li class=""><a href="@Url.Action("Index","CrimeRate")" class="">Crime rate</a></li>
-                            <li class=""><a href="@Url.Action("HealthCare","Home")" class="">Health care</a></li>
-
+                            <li class="@(controllerName.ToLower() == "home" && actionName.ToLower() == "index" ? "active" : "")"><a href="@Url.Action("Index","Home")" class="">Dashboard</a></li>
+                            <li class="@(controllerName.ToLower() == "home" && actionName.ToLower() == "basicinfo" ? "active" : "")"><a href="@Url.Action("BasicInfo","Home")" class="">Basic info</a></li>
+                            <li class="@(controllerName.ToLower() == "costoflife" && actionName.ToLower() == "index" ? "active" : "")"><a href="@Url.Action("Index","CostOfLife")" class="">Cost of life</a></li>
+                            <li class="@(controllerName.ToLower() == "crimerate" && actionName.ToLower() == "index" ? "active" : "")"><a href="@Url.Action("Index","CrimeRate")" class="">Crime rate</a></li>
                         </ul>
                     </li>
 
                     <li data-username="" class="nav-item active pcoded-trigger">
                         <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="fas fa-user-edit"></i></span><span class="pcoded-mtext">My data</span></a>
                         <ul class="pcoded-submenu">
-                            <li class=""><a href="@Url.Action("UserCostOfValueRate","CostOfLife")" class="">My cost of living rate</a></li>
-                            <li class=""><a href="@Url.Action("UserCrimeRateInput","CrimeRate")" class="">My crime rate input</a></li>
+                            <li class="@(controllerName.ToLower() == "costoflife" && actionName.ToLower() == "usercostofvaluerate" ? "active" : "")"><a href="@Url.Action("UserCostOfValueRate","CostOfLife")" class="">My cost of living rate</a></li>
+                            <li class="@(controllerName.ToLower() == "crimerate" && actionName.ToLower() == "usercrimerateinput" ? "active" : "")"><a href="@Url.Action("UserCrimeRateInput","CrimeRate")" class="">My crime rate input</a></li>
                         </ul>
                     </li>
-                @if (User.IsInRole("Admin"))
-                {
-                    <li data-username="" class="nav-item active pcoded-trigger">
-                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Admin</span></a>
-                        <ul class="pcoded-submenu">
-                            <li><a href="index.html" class="">Users</a></li>
-                            <li class=""><a href="dashboard-ecommerce.html" class="">User reviews</a></li>
-                            <li class=""><a href="dashboard-crm.html" class="">User inputs</a></li>
-                        </ul>
-                    </li>
-                }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li data-username="" class="nav-item active pcoded-trigger">
+                            <a href="#!" class="nav-link"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Admin</span></a>
+                            <ul class="pcoded-submenu">
+                                <li class="@(controllerName.ToLower() == "admin" && actionName.ToLower() == "users" ? "active" : "")"><a href="@Url.Action("Users","Admin")" class="">Users</a></li>
+                                <li class="@(controllerName.ToLower() == "admin" && actionName.ToLower() == "costofliving" ? "active" : "")"><a href="@Url.Action("CostOfLiving","Admin")" class="">Cost of living input</a></li>
+                                <li class="@(controllerName.ToLower() == "admin" && actionName.ToLower() == "crimerate" ? "active" : "")"><a href="@Url.Action("CrimeRate","Admin")" class="">Crime rate input</a></li>
+                            </ul>
+                        </li>
+                    }
 
                 </ul>
             </div>

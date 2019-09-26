@@ -47,14 +47,17 @@ namespace TripKraken.Service
         public CountryInfo GetCountryInfo(int? countryId = null,string name = null)
         {
             var db = new ApplicationDbContext();
+            var result = new CountryInfo();
             if (!String.IsNullOrEmpty(name))
             {
-                return db.CountryInfo.SingleOrDefault(x => name.Contains(x.Country.Name));
+                result = db.CountryInfo.SingleOrDefault(x => name.Contains(x.Country.Name));
             }
             else
             {
-                return db.CountryInfo.SingleOrDefault(x => x.CountryID == countryId);
+                result = db.CountryInfo.SingleOrDefault(x => x.CountryID == countryId);
             }
+
+            return result;
         }
 
         public CountryInfoView GetCountryInfoValues(int? countryId=null,string countryName = null)
@@ -94,6 +97,7 @@ namespace TripKraken.Service
             result.Density = countryInfoResult.Density;
             result.CrimeRateAvg = crimeRateAvgList.SingleOrDefault(x => x.Key == "TotalCrimeRate").Value;
             result.SafetyRateAvg = crimeRateAvgList.SingleOrDefault(x => x.Key == "TotalSafetyRate").Value;
+
             try
             {
                 result.HealthCareAvg = Math.Round(countryInfoResult.HealthCareInfo.Sum(x => x.Value) /
@@ -104,6 +108,15 @@ namespace TripKraken.Service
             result.Id = countryInfoResult.Id;
 
             return result;
+        }
+
+        public List<CountryInfo> GetCrimeRates(int? countryID, string countryName=null)
+        {
+            var db = new ApplicationDbContext();
+            if (countryName != null)
+                return db.CountryInfo.Where(x => x.Country.Name == countryName).ToList();
+            else
+                return db.CountryInfo.ToList();
         }
 
         public void DeleteCostOfLiving(int id)
@@ -126,43 +139,70 @@ namespace TripKraken.Service
             }
         }
 
-        public void CreateCostOfLiving(CostOfLivingInfo model)
+        public CostOfLivingInfo GetCostOfLivingInfo(int id)
+        {
+            var db = new ApplicationDbContext();
+            return db.CostOfLivingInfo.Find(id);
+        }
+
+        public string CreateCostOfLiving(CostOfLivingInfo model)
         {
             using (var db = new ApplicationDbContext())
             {
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
+                if (db.CostOfLivingInfo.Any(x => x.ApplicationUserId == model.ApplicationUserId && model.PriceForTypeID == x.PriceForTypeID))
+                    return $"You already added value for this cost";
                 db.CostOfLivingInfo.Add(model);
                 db.SaveChanges();
             }
+            return "Successfull added value";
         }
 
-        public void CreateCrimeRate(CrimeRateInfo model)
+        public void EditCostOfLiving(int id, decimal value)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var result = db.CostOfLivingInfo.Find(id);
+                result.UpdateDate = DateTime.Now;
+                result.Value = value;
+                db.SaveChanges();
+            }
+        }
+
+        public CrimeRateInfo GetCrimeRateInfo(int id)
+        {
+            var db = new ApplicationDbContext();
+            return db.CrimeRateInfo.Find(id);
+        }
+
+        public string CreateCrimeRate(CrimeRateInfo model)
         {
             using (var db = new ApplicationDbContext())
             {
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
+
+                if (db.CrimeRateInfo.Any(x => x.ApplicationUserId == model.ApplicationUserId && model.CrimeRateTypeID == x.CrimeRateTypeID))
+                    return $"You already added value for this rate";
+
                 db.CrimeRateInfo.Add(model);
+                db.SaveChanges();
+
+            }
+            return "Successfull added value";
+        }
+
+        public void EditCrimeRate(int id, decimal value)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var result = db.CrimeRateInfo.Find(id);
+                result.UpdateDate = DateTime.Now;
+                result.Value = value;
                 db.SaveChanges();
             }
         }
-        //TODO: TU STAO TREBA DODATI LISTU INPUTA I EDIT DELETE ZA NJIH
-
-        //public List<CountryRanksView> GetTopCountryRanks()
-        //{
-
-        //}
-
-        //public List<MaxValues> GetMaxValues()
-        //{
-
-        //}
-
-        //public List<AvgValues> GetMaxValues()
-        //{
-
-        //}
 
     }
 

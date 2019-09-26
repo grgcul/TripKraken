@@ -92,9 +92,9 @@
             </div>
         </div>*@
     @{
-                    /**/
+        /**/
 
-                    Html.RenderPartial("_Header");
+        Html.RenderPartial("_Header");
     }
     @{
         Html.RenderPartial("_Navigation");
@@ -167,18 +167,16 @@
     <![endif]-->
     <!-- Warning Section Ends -->
     <!-- Required Js -->
+    @Scripts.Render("~/bundles/jquery")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    @RenderSection("scripts", required: false)
     <script src="~/assets/js/vendor-all.min.js"></script>
     <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="~/assets/js/pcoded.min.js"></script>
     <!-- amchart js -->
     <script src="~/assets/plugins/amchart/js/amcharts.js"></script>
-    <script src="~/assets/plugins/amchart/js/gauge.js"></script>
-    <script src="~/assets/plugins/amchart/js/serial.js"></script>
-    <script src="~/assets/plugins/amchart/js/light.js"></script>
-    <script src="~/assets/plugins/amchart/js/pie.min.js"></script>
-    <script src="~/assets/plugins/amchart/js/ammap.min.js"></script>
-    <script src="~/assets/plugins/amchart/js/radar.js"></script>
     <script src="https://www.amcharts.com/lib/4/core.js"></script>
     <script src="https://www.amcharts.com/lib/4/maps.js"></script>
     <script src="https://www.amcharts.com/lib/4/geodata/worldLow.js"></script>
@@ -188,16 +186,15 @@
     <script src="~/assets/plugins/notification/js/bootstrap-growl.min.js"></script>
     <script src="~/assets/plugins/pnotify/js/pnotify.custom.min.js"></script>
     <script src="~/assets/plugins/pnotify/js/notify-event.js"></script>
-    @RenderSection("scripts", required: false)
 
     <script>
         @if (Session["CreateTxt"] != null)
         {
             <text>
         new PNotify({
-            title: 'Success',
+            title: 'Info',
             text: '@Session["CreateTxt"].ToString()',
-            type: 'success'
+            type: 'info'
         });
             </text>
             Session["CreateTxt"] = null;
@@ -215,13 +212,6 @@
             Session["DeleteTxt"] = null;
         }
 
-
-
-
-    </script>
-
-    <!-- dashboard-custom js -->
-    <script>
 
     </script>
 

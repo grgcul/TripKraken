@@ -104,6 +104,7 @@
     <Compile Include="ViewModel\MainView.cs" />
     <Compile Include="ViewModel\UserCrimeRateInputView.cs" />
     <Compile Include="ViewModel\UserValueForCostView.cs" />
+    <Compile Include="ViewModel\UserView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TripKraken.DataSource\TripKraken.DataSource.csproj">

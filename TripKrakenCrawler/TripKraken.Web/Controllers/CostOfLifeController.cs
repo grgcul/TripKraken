@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace TripKraken.Web.Controllers
 {
+    [Authorize]
     public class CostOfLifeController : Controller
     {
         public ActionResult Index()
@@ -47,7 +48,7 @@ namespace TripKraken.Web.Controllers
 
         }
 
-        public ActionResult CreateCostOfLife(int? countryInfoId, string type)
+        public ActionResult Create(int? countryInfoId, string type)
         {
             ViewBag.PriceType = type;
             var userService = new UserService();
@@ -61,13 +62,37 @@ namespace TripKraken.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateCostOfLife(CreateCostOfLivingInfoView createModel)
+        public ActionResult Create(CreateCostOfLivingInfoView createModel)
         {
             var service = new CountryInfoService();
-            var model = AutoMapper.Mapper.Map<CreateCostOfLivingInfoView, CostOfLivingInfo>(createModel);
-            service.CreateCostOfLiving(model);
-            Session["CreateTxt"] = "Successfully added value.";
-            return Index();
+            var model = AutoMapper.Mapper.Map<CreateCostOfLivingInfoView, CostOfLivingInfo>(createModel);      
+            Session["CreateTxt"] = service.CreateCostOfLiving(model);
+            return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Edit(int id)
+        {
+            var userService = new UserService();
+            var service = new CountryInfoService();
+
+            var result = service.GetCostOfLivingInfo(id);
+            var model = new EditCostOfLivingInfoView()
+            {
+                Value = result.Value,
+                Id = id
+            };
+            
+            return View("Edit", model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditCostOfLivingInfoView editModel)
+        {
+            var service = new CountryInfoService();
+            service.EditCostOfLiving(editModel.Id,editModel.Value);
+            Session["CreateTxt"] = "Successfully edited value.";
+            return RedirectToAction("UserCostOfValueRate");
         }
 
 
@@ -85,7 +110,6 @@ namespace TripKraken.Web.Controllers
             else
                 model.CostList = userService.GetUserCostOfLiving(User.Identity.Name, countryId);
 
-
             return View("UserCostOfValueRate", model);
         }
 
@@ -94,10 +118,8 @@ namespace TripKraken.Web.Controllers
         {
             var userSelected = Session["selectedUser"] != null ? Session["selectedUser"].ToString() : null;
             Session["countryId"] = countryId;
-            return UserCostOfValueRate(userSelected, countryId);
+            return RedirectToAction("UserCostOfValueRate",new { username = userSelected,countrId = countryId});
         }
-
-
 
         [HttpPost]
         public ActionResult Delete(int id)
@@ -105,7 +127,7 @@ namespace TripKraken.Web.Controllers
             var service = new CountryInfoService();
             service.DeleteCostOfLiving(id);
             Session["DeleteTxt"] = "Successfully deleted value.";
-            return UserCostOfValueRate();
+            return RedirectToAction("UserCostOfValueRate");
         }
     }
 }

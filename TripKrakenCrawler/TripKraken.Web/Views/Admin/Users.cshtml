@@ -1,0 +1,53 @@
+﻿@model TripKraken.Service.ViewModel.UserView
+@section breadcrump{
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="page-header-title">
+                <h5 class="m-b-10">Users</h5>
+            </div>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("CostOfLife","Home")"><i class="feather icon-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="#!">Users</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr />
+}
+<div class="row">
+    <div class="col-xl-12 no-padding-l">
+        <div class="card">
+            <div class="card-header">
+                <h3>List of users</h3>
+            </div>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-hover f-18">
+                        <tbody>
+                            @foreach (var item in Model.UserList)
+                            {
+                                <tr>
+                                    <td><span class="f-18">@item.Id</span></td>
+                                    <td>@item.UserName</td>
+                                    <td></td>
+                                    <td>@Model.Roles.First(x => item.Roles.Count > 0 ? x.Id == item.Roles.First().RoleId:x.Name.ToLower() == "user").Name
+                                    </td>
+                                    <td>
+                                        @using (Html.BeginForm("Delete", "Admin", new { userId = item.Id }))
+                                        {
+                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                        }
+                                        <a href="@Url.Action("Edit", "Admin", new { userId = item.Id })" class="btn btn-primary text-white f-12"> Change role</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+}

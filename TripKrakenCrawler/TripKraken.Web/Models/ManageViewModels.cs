@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 
 namespace TripKraken.Web.Models
@@ -82,5 +83,13 @@ namespace TripKraken.Web.Models
     {
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
+    }
+
+    public class EditUserView
+    {
+        public string UserId { get; set; }
+        public List<IdentityRole> Roles { get; set; }
+        public string RoleId { get; set; }
+
     }
 }

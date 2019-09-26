@@ -1,11 +1,6 @@
 ﻿
 
 @model TripKraken.Service.ViewModel.CountryInfoView
-@{
-    /**/
-
-    ViewBag.Title = " - Trip kraken";
-}
 @section breadcrump{
     <div class="row">
         <div class="col-lg-6">
@@ -82,7 +77,7 @@
 
 
                                 </td>
-                                <td><a href="@Url.Action("CreateCrimeRate","CrimeRate",new { countryInfoId=Model.Id,type=item.Key})" class="label theme-bg text-white f-12 add-costofval"> Add data</a></td>
+                                <td><a href="@Url.Action("Create","CrimeRate",new { countryInfoId=Model.Id,type=item.Key})" class="label theme-bg text-white f-12 add-costofval"> Add data</a></td>
                                 
                             </tr>
                             }
