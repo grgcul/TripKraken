@@ -147,11 +147,13 @@ namespace TripKraken.Service
 
         public string CreateCostOfLiving(CostOfLivingInfo model)
         {
+
             using (var db = new ApplicationDbContext())
             {
+                var countryId = db.CountryInfo.SingleOrDefault(x => x.Id == model.CountryInfoID).CountryID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
-                if (db.CostOfLivingInfo.Any(x => x.ApplicationUserId == model.ApplicationUserId && model.PriceForTypeID == x.PriceForTypeID))
+                if (db.CostOfLivingInfo.Any(x => x.ApplicationUserId == model.ApplicationUserId && model.PriceForTypeID == x.PriceForTypeID && countryId == x.CountryInfo.CountryID))
                     return $"You already added value for this cost";
                 db.CostOfLivingInfo.Add(model);
                 db.SaveChanges();
@@ -180,10 +182,11 @@ namespace TripKraken.Service
         {
             using (var db = new ApplicationDbContext())
             {
+                var countryId = db.CountryInfo.SingleOrDefault(x => x.Id == model.CountryInfoID).CountryID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
 
-                if (db.CrimeRateInfo.Any(x => x.ApplicationUserId == model.ApplicationUserId && model.CrimeRateTypeID == x.CrimeRateTypeID))
+                if (db.CrimeRateInfo.Any(x => x.ApplicationUserId == model.ApplicationUserId && model.CrimeRateTypeID == x.CrimeRateTypeID && countryId == x.CountryInfo.CountryID))
                     return $"You already added value for this rate";
 
                 db.CrimeRateInfo.Add(model);

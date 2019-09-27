@@ -117,8 +117,18 @@ namespace TripKraken.Web.Controllers
         public ActionResult UserCostOfValueRateP(int? countryId = null, string countryName = null)
         {
             var userSelected = Session["selectedUser"] != null ? Session["selectedUser"].ToString() : null;
-            Session["countryId"] = countryId;
-            return RedirectToAction("UserCostOfValueRate",new { username = userSelected,countrId = countryId});
+            try
+            {
+                var service = new CountryInfoService();
+                var model = service.GetCountryInfoValues(countryId, countryName);
+                Session["countryId"] = model.Country.Id;
+                Session["countryCode"] = model.Country.Code;
+            }
+            catch
+            {
+                return View("NoCountryInfo");
+            }
+            return RedirectToAction("UserCostOfValueRate",new { username = userSelected,countryId = countryId});
         }
 
         [HttpPost]
