@@ -14,30 +14,28 @@ namespace TripKraken.Crawler
         {
             var scrape = new ScrapeInfoService("https://www.numbeo.com/cost-of-living/",ScrapeData.Countries);
             var scrape2 = new ScrapeInfoService("https://www.speedtest.net/global-index", ScrapeData.InternetSpeed);
-            scrape.ScrapeDataCostOfLifeValues();
-            scrape.ScrapeCrimeRate();
 
             // Countries list
-            //scrape.Start();
+            scrape.Start();
 
-            //// Internet speed
-            //scrape2.Start();
+            // Internet speed
+            scrape2.Start();
 
 
-            //// Scrape info run
-            //scrape.ScrapeCrimeRateTypes();
+            // Scrape info run
+            scrape.ScrapeCrimeRateTypes();
 
-            //scrape.ScrapeDataCostOfLifeTypes();
+            scrape.ScrapeDataCostOfLifeTypes();
 
-            //scrape.ScrapingBasicCountryInfo();
+            scrape.ScrapingBasicCountryInfo();
 
-            //scrape.ScrapeCrimeRate();
+            scrape.ScrapeCrimeRate();
 
-            //scrape.ScrapeDataCostOfLifeValues();
+            scrape.ScrapeDataCostOfLifeValues();
 
-            //scrape.ScrapeHealthCare();
+            scrape.ScrapeHealthCare();
 
-            //scrape.ScrapePollutionRate();
+            scrape.ScrapePollutionRate();
 
             Console.ReadKey();
         }
