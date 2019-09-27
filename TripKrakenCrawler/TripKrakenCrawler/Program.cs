@@ -31,7 +31,7 @@ namespace TripKraken.Crawler
 
             //scrape.ScrapingBasicCountryInfo();
 
-            scrape.ScrapeCrimeRate();
+            //scrape.ScrapeCrimeRate();
 
             //scrape.ScrapeDataCostOfLifeValues();
 

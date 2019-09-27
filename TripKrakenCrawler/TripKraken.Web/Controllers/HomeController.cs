@@ -154,7 +154,7 @@ namespace TripKraken.Web.Controllers
             model.action = actionP;
             model.controller = controllerP;
             model.Countries = service.GetCountries();
-            model.CountryId = (int?)Session["countryId"];
+                model.CountryId = (int?)Session["countryId"];
             return PartialView("_PartialSearch", model);
         }
     }

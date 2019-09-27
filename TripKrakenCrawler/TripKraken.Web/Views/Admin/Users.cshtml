@@ -23,24 +23,32 @@
             <div class="card-block table-border-style">
                 <div class="table-responsive">
                     <table class="table table-hover f-18">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>User name</th>
+                                <th>Role</th>
+                                <th>Options</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             @foreach (var item in Model.UserList)
                             {
                                 <tr>
                                     <td><span class="f-18">@item.Id</span></td>
                                     <td>@item.UserName</td>
-                                    <td></td>
-                                    <td>@Model.Roles.First(x => item.Roles.Count > 0 ? x.Id == item.Roles.First().RoleId:x.Name.ToLower() == "user").Name
-                                    </td>
                                     <td>
-                                        @using (Html.BeginForm("Delete", "Admin", new { userId = item.Id }))
-                                        {
-                                            <button class="btn btn-danger" type="submit">Delete</button>
-                                        }
-                                        <a href="@Url.Action("Edit", "Admin", new { userId = item.Id })" class="btn btn-primary text-white f-12"> Change role</a>
-                                    </td>
-                                </tr>
-                            }
+                                        @Model.Roles.First(x => item.Roles.Count > 0 ? x.Id == item.Roles.First().RoleId : x.Name.ToLower() == "user").Name
+                                </td>
+                                <td>
+                                    @using (Html.BeginForm("Delete", "Admin", new { userId = item.Id }))
+                                    {
+                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                    }
+                                    <a href="@Url.Action("Edit", "Admin", new { userId = item.Id })" class="btn btn-primary text-white f-12"> Change role</a>
+                                </td>
+                            </tr>
+                        }
 
                         </tbody>
                     </table>
