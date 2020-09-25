@@ -78,18 +78,7 @@ namespace TripKraken.Web.Controllers
         [HttpPost]
         public ActionResult CrimeRate(int? countryId = null, string countryName = null)
         {
-            try
-            {
-                var service = new CountryInfoService();
-                var model = service.GetCountryInfoValues(countryId, countryName);
-                Session["countryId"] = model.Country.Id;
-                Session["countryCode"] = model.Country.Code;
-            }
-            catch
-            {
-                return View("NoCountryInfo");
-            }
-            return RedirectToAction("CrimeRate", new { countryId = countryId });
+            return CrimeRate(null,countryId);
         }
 
         public ActionResult CostOfLiving(string username = null, int? countryId = null, string countryName = null)
@@ -112,19 +101,7 @@ namespace TripKraken.Web.Controllers
         [HttpPost]
         public ActionResult CostOfLiving(int? countryId = null, string countryName = null)
         {
-            try
-            {
-                var service = new CountryInfoService();
-                var model = service.GetCountryInfoValues(countryId, countryName);
-                Session["countryId"] = model.Country.Id;
-                Session["countryCode"] = model.Country.Code;
-            }
-            catch
-            {
-                return View("NoCountryInfo");
-            }
-
-            return RedirectToAction("CostOfLiving",new {countryId = countryId});
+            return CostOfLiving(countryId);
         }
 
         [HttpPost]

@@ -227,9 +227,9 @@
 
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="row">
-            <div class="col-xl-12">
+    <div class="col-xl-6 col-lg-6 col-md-12 m-t-40 margin-t-20">
+        <div class="row margin-t-20">
+            <div class="col-xl-12 m-t-45">
                 <div class="card">
                     <div class="card-header">
                         <h3>Prices & salaries</h3>
@@ -243,56 +243,120 @@
                                 <tbody>
                                     <tr>
                                         <td>Apartment 1 bedroom</td>
-                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Apartment (1 bedroom) in City Centre").Value.ToString("N0") €</td>
-                                        <td></td>
-                                    </tr>
+                                        <td>
+                                            @if (@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Apartment (1 bedroom) in City Centre").Value != 0)
+                                            {
+                                                <text>@String.Format(new System.Globalization.CultureInfo("hr-HR"), "{0:N}", @Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Apartment (1 bedroom) in City Centre").Value) €</text>
+                                            }
+                                            else
+                                            {
+                                                <text>?</text>
+                                            }
+                                        </td>
+                                            <td></td>
+                                        </tr>
                                     <tr>
                                         <td>Gasoline 1L</td>
-                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Gasoline (1 liter)").Value.ToString("N0") €</td>
+                                        <td>
+                                            @if (@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Gasoline (1 liter)").Value != 0)
+                                            {
+                                                <text>@String.Format(new System.Globalization.CultureInfo("hr-HR"), "{0:N}", @Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Gasoline (1 liter)").Value) €</text>
+                                            }
+                                            else
+                                            {
+                                                <text>?</text>
+                                            }
+                                        </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Average Monthly Net Salary</td>
-                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Average Monthly Net Salary (After Tax)").Value.ToString("N0") €</td>
+                                        <td>
+                                            @if (@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Average Monthly Net Salary (After Tax)").Value != 0)
+                                            {
+                                                <text>@String.Format(new System.Globalization.CultureInfo("hr-HR"), "{0:N}", @Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Average Monthly Net Salary (After Tax)").Value) €</text>
+                                            }
+                                            else
+                                            {
+                                                <text>?</text>
+                                            }
+                                        </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Mortgage Interest</td>
-                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Mortgage Interest Rate in Percentages (%), Yearly, for 20 Years Fixed-Rate").Value.ToString("N0") %</td>
+                                        <td>
+                                            @if (@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Mortgage Interest Rate in Percentages (%), Yearly, for 20 Years Fixed-Rate").Value != 0)
+                                            {
+                                                <text>@String.Format(new System.Globalization.CultureInfo("hr-HR"), "{0:N}", @Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Mortgage Interest Rate in Percentages (%), Yearly, for 20 Years Fixed-Rate").Value) €</text>
+                                            }
+                                            else
+                                            {
+                                                <text>?</text>
+                                            }
+                                        </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Meal in restaurant</td>
-                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Meal, Inexpensive Restaurant").Value.ToString("N0") €</td>
+                                        <td>
+                                            @if (@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Meal, Inexpensive Restaurant").Value != 0)
+                                            {
+                                                <text>@String.Format(new System.Globalization.CultureInfo("hr-HR"), "{0:N}", @Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Meal, Inexpensive Restaurant").Value) €</text>
+                                            }
+                                            else
+                                            {
+                                                <text>?</text>
+                                            }
+                                        </td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td>Water 1.5L bottle</td>
-                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Water (1.5 liter bottle)").Value.ToString("N0") €</td>
+                                        <td>
+                                            @if (@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Water (1.5 liter bottle)").Value != 0)
+                                            {
+                                                <text>@String.Format(new System.Globalization.CultureInfo("hr-HR"), "{0:N}", @Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Water (1.5 liter bottle)").Value) €</text>
+                                            }
+                                            else
+                                            {
+                                                <text>?</text>
+                                            }
+                                        </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Beer 0,5L</td>
-                                        <td>@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Domestic Beer (0.5 liter draught)").Value €</td>
+                                        <td>
+                                            @if (@Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Domestic Beer (0.5 liter draught)").Value != 0)
+                                            {
+                                                <text>@String.Format(new System.Globalization.CultureInfo("hr-HR"), "{0:N}", @Model.CostOfLifeAvg.SingleOrDefault(x => x.Key == "Domestic Beer (0.5 liter draught)").Value) €</text>
+                                            }
+                                            else
+                                            {
+                                                <text>?</text>
+                                            }
+                                        </td>
                                         <td></td>
                                     </tr>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
-</div>
 
-
-@section scripts{
-    <script src="https://www.amcharts.com/lib/4/core.js"></script>
-    <script src="https://www.amcharts.com/lib/4/maps.js"></script>
-    <script src="https://www.amcharts.com/lib/4/geodata/worldHigh.js"></script>
-    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-    <script>
+    @section scripts{
+        <script src="https://www.amcharts.com/lib/4/core.js"></script>
+        <script src="https://www.amcharts.com/lib/4/maps.js"></script>
+        <script src="https://www.amcharts.com/lib/4/geodata/worldHigh.js"></script>
+        <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+        <script>
 
 
 am4core.useTheme(am4themes_animated);
@@ -332,6 +396,6 @@ label.fontSize = 35;
 label.fontWeight = "bold";
 label.text = "@Model.Country.Name";
 label.fillOpacity = 0.2;
-    </script>
-}
+        </script>
+    }
 

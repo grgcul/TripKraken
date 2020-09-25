@@ -116,18 +116,8 @@ namespace TripKraken.Web.Controllers
         public ActionResult UserCrimeRateInputP(int? countryId = null, string countryName = null)
         {
             var userSelected = Session["selectedUser"] != null ? Session["selectedUser"].ToString() : null;
-            try
-            {
-                var service = new CountryInfoService();
-                var model = service.GetCountryInfoValues(countryId, countryName);
-                Session["countryId"] = model.Country.Id;
-                Session["countryCode"] = model.Country.Code;
-            }
-            catch
-            {
-                return View("NoCountryInfo");
-            }
-            return RedirectToAction("UserCrimeRateInput", new { username = userSelected, countryId = countryId });
+            Session["countryId"] = countryId;
+            return RedirectToAction("UserCrimeRateInput", new { username = userSelected, countrId = countryId });
         }
 
 
